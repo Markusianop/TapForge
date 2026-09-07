@@ -1,0 +1,123 @@
+diff -ruN '--exclude=.git' tf32_orig/CHANGELOG.md tf_bugfix/CHANGELOG.md
+--- tf32_orig/CHANGELOG.md	2026-09-07 16:45:19.000000000 +0000
++++ tf_bugfix/CHANGELOG.md	2026-09-07 17:14:34.850851614 +0000
+@@ -1,3 +1,9 @@
++## 3.2.1 — Whisper Keystore hotfix
++
++- Fixes Whisper preparation failing on Android Keystore with `Caller-provided IV not permitted`.
++- Letterbox now lets Android Keystore generate a fresh AES-GCM IV and stores it in a versioned local envelope.
++- Keeps read compatibility with the previous local Letterbox format.
++
+ # Changelog
+ 
+ ## 3.2 — Switchboard
+diff -ruN '--exclude=.git' tf32_orig/app/build.gradle tf_bugfix/app/build.gradle
+--- tf32_orig/app/build.gradle	2026-09-07 16:39:39.000000000 +0000
++++ tf_bugfix/app/build.gradle	2026-09-07 17:14:21.082585596 +0000
+@@ -10,8 +10,8 @@
+         applicationId 'com.tapforge'
+         minSdk 24
+         targetSdk 35
+-        versionCode 22
+-        versionName '3.2'
++        versionCode 23
++        versionName '3.2.1'
+     }
+ 
+     buildFeatures {
+diff -ruN '--exclude=.git' tf32_orig/app/src/main/java/com/tapforge/PocketKeyring.java tf_bugfix/app/src/main/java/com/tapforge/PocketKeyring.java
+--- tf32_orig/app/src/main/java/com/tapforge/PocketKeyring.java	2026-09-07 09:23:28.000000000 +0000
++++ tf_bugfix/app/src/main/java/com/tapforge/PocketKeyring.java	2026-09-07 17:14:21.082414491 +0000
+@@ -12,6 +12,7 @@
+ import java.security.Signature;
+ import java.security.spec.ECGenParameterSpec;
+ import java.util.Arrays;
++import java.nio.charset.StandardCharsets;
+ 
+ import javax.crypto.Cipher;
+ import javax.crypto.KeyGenerator;
+@@ -43,16 +44,58 @@
+         return s.verify(signature);
+     }
+ 
++    private static final byte[] BOX_MAGIC = new byte[]{'T','F','B','X'};
++    private static final byte BOX_VERSION = 1;
++    private static final byte[] BOX_AAD = "TapForge Letterbox v1".getBytes(StandardCharsets.UTF_8);
++
++    /**
++     * Seals local Whisper payloads with an Android-Keystore AES/GCM key.
++     *
++     * Android Keystore keys default to randomized-encryption-required. That means
++     * callers MUST NOT provide their own IV for ENCRYPT_MODE. The provider creates
++     * a fresh IV and we persist it next to the ciphertext for later decryption.
++     */
+     public static byte[] seal(Context context, byte[] plain) throws Exception {
+-        byte[] iv = WhisperWire.random(12);
++        if (plain == null) throw new IllegalArgumentException("plain payload");
+         Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
+-        c.init(Cipher.ENCRYPT_MODE, vaultKey(context), new GCMParameterSpec(128, iv));
++        c.init(Cipher.ENCRYPT_MODE, vaultKey(context));
++        byte[] iv = c.getIV();
++        if (iv == null || iv.length < 12 || iv.length > 32) throw new IllegalStateException("invalid keystore IV");
++        c.updateAAD(BOX_AAD);
+         byte[] encrypted = c.doFinal(plain);
+-        return WhisperWire.concat(iv, encrypted);
++
++        byte[] sealed = new byte[BOX_MAGIC.length + 2 + iv.length + encrypted.length];
++        int off = 0;
++        System.arraycopy(BOX_MAGIC, 0, sealed, off, BOX_MAGIC.length); off += BOX_MAGIC.length;
++        sealed[off++] = BOX_VERSION;
++        sealed[off++] = (byte) iv.length;
++        System.arraycopy(iv, 0, sealed, off, iv.length); off += iv.length;
++        System.arraycopy(encrypted, 0, sealed, off, encrypted.length);
++        return sealed;
+     }
+ 
+     public static byte[] unseal(Context context, byte[] sealed) throws Exception {
+         if (sealed == null || sealed.length < 28) throw new IllegalArgumentException("sealed payload");
++
++        // New versioned envelope. Keeping the legacy branch below lets updates read
++        // payloads staged by devices/providers where the old format happened to work.
++        if (hasBoxMagic(sealed)) {
++            if (sealed.length < BOX_MAGIC.length + 2 + 12 + 16) throw new IllegalArgumentException("sealed payload");
++            int off = BOX_MAGIC.length;
++            int version = sealed[off++] & 0xFF;
++            if (version != BOX_VERSION) throw new IllegalArgumentException("sealed version");
++            int ivLength = sealed[off++] & 0xFF;
++            if (ivLength < 12 || ivLength > 32 || off + ivLength + 16 > sealed.length)
++                throw new IllegalArgumentException("sealed IV");
++            byte[] iv = Arrays.copyOfRange(sealed, off, off + ivLength);
++            byte[] encrypted = Arrays.copyOfRange(sealed, off + ivLength, sealed.length);
++            Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
++            c.init(Cipher.DECRYPT_MODE, vaultKey(context), new GCMParameterSpec(128, iv));
++            c.updateAAD(BOX_AAD);
++            return c.doFinal(encrypted);
++        }
++
++        // Legacy 3.2-and-earlier Letterbox envelope: 12-byte IV || GCM ciphertext+tag.
+         byte[] iv = Arrays.copyOfRange(sealed, 0, 12);
+         byte[] encrypted = Arrays.copyOfRange(sealed, 12, sealed.length);
+         Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
+@@ -60,6 +103,12 @@
+         return c.doFinal(encrypted);
+     }
+ 
++    private static boolean hasBoxMagic(byte[] sealed) {
++        if (sealed.length < BOX_MAGIC.length + 2) return false;
++        for (int i = 0; i < BOX_MAGIC.length; i++) if (sealed[i] != BOX_MAGIC[i]) return false;
++        return true;
++    }
++
+     private static KeyPair identity(Context context) throws Exception {
+         KeyStore ks = KeyStore.getInstance(STORE); ks.load(null);
+         if (!ks.containsAlias(ID_ALIAS)) {
+diff -ruN '--exclude=.git' tf32_orig/fastlane/metadata/android/en-US/changelogs/23.txt tf_bugfix/fastlane/metadata/android/en-US/changelogs/23.txt
+--- tf32_orig/fastlane/metadata/android/en-US/changelogs/23.txt	1970-01-01 00:00:00.000000000 +0000
++++ tf_bugfix/fastlane/metadata/android/en-US/changelogs/23.txt	2026-09-07 17:14:21.083050590 +0000
+@@ -0,0 +1 @@
++Fixes Whisper staging on Android Keystore by using provider-generated AES-GCM IVs and a versioned local Letterbox envelope.
+diff -ruN '--exclude=.git' tf32_orig/fastlane/metadata/android/es-ES/changelogs/23.txt tf_bugfix/fastlane/metadata/android/es-ES/changelogs/23.txt
+--- tf32_orig/fastlane/metadata/android/es-ES/changelogs/23.txt	1970-01-01 00:00:00.000000000 +0000
++++ tf_bugfix/fastlane/metadata/android/es-ES/changelogs/23.txt	2026-09-07 17:14:21.083267294 +0000
+@@ -0,0 +1 @@
++Corrige la preparación de Whisper en Android Keystore usando IV AES-GCM generado por el proveedor y un sobre local versionado para Letterbox.
