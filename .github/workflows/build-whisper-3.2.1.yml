@@ -36,46 +36,31 @@ jobs:
 
           p = Path("app/src/main/java/com/tapforge/PocketKeyring.java")
           s = p.read_text()
-          old = '''    public static byte[] seal(Context context, byte[] plain) throws Exception {
-              byte[] iv = WhisperWire.random(12);
-              Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
-              c.init(Cipher.ENCRYPT_MODE, vaultKey(context), new GCMParameterSpec(128, iv));
-              byte[] encrypted = c.doFinal(plain);
-              return WhisperWire.concat(iv, encrypted);
-          }
-          '''
-          new = '''    public static byte[] seal(Context context, byte[] plain) throws Exception {
-              Cipher c = Cipher.getInstance("AES/GCM/NoPadding");
-              // Android Keystore requires the provider to generate the IV for keys
-              // created with randomized encryption (the secure default).
-              c.init(Cipher.ENCRYPT_MODE, vaultKey(context));
-              byte[] iv = c.getIV();
-              if (iv == null || iv.length != 12) throw new IllegalStateException("invalid keystore IV");
-              byte[] encrypted = c.doFinal(plain);
-              return WhisperWire.concat(iv, encrypted);
-          }
-          '''
-          if old not in s:
-              raise SystemExit("PocketKeyring hotfix target not found")
-          p.write_text(s.replace(old, new))
+
+          iv_line = "        byte[] iv = WhisperWire.random(12);\n"
+          init_line = "        c.init(Cipher.ENCRYPT_MODE, vaultKey(context), new GCMParameterSpec(128, iv));\n"
+
+          if s.count(iv_line) != 1:
+              raise SystemExit(f"unexpected IV source count: {s.count(iv_line)}")
+          if s.count(init_line) != 1:
+              raise SystemExit(f"unexpected encrypt init count: {s.count(init_line)}")
+
+          s = s.replace(iv_line, "", 1)
+          replacement = (
+              "        // Android Keystore requires provider-generated IVs when randomized encryption is enabled.\n"
+              "        c.init(Cipher.ENCRYPT_MODE, vaultKey(context));\n"
+              "        byte[] iv = c.getIV();\n"
+              "        if (iv == null || iv.length != 12) throw new IllegalStateException(\"invalid keystore IV\");\n"
+          )
+          s = s.replace(init_line, replacement, 1)
+          p.write_text(s)
 
           g = Path("app/build.gradle")
           t = g.read_text()
-          t = t.replace("versionCode 22", "versionCode 23")
-          t = t.replace("versionName '3.2'", "versionName '3.2.1'")
-          g.write_text(t)
-
-          ch = Path("CHANGELOG.md")
-          if ch.exists():
-              text = ch.read_text()
-              entry = """## 3.2.1 — Whisper Keystore hotfix
-
-          - Fixes Whisper preparation failing with `Caller-provided IV not permitted` on Android Keystore.
-          - AES-GCM now uses the Keystore provider-generated IV while preserving the existing Letterbox format.
-
-          """
-              if "## 3.2.1" not in text:
-                  ch.write_text(entry + text)
+          if "versionCode 22" not in t or "versionName '3.2'" not in t:
+              raise SystemExit("unexpected version base")
+          g.write_text(t.replace("versionCode 22", "versionCode 23", 1)
+                        .replace("versionName '3.2'", "versionName '3.2.1'", 1))
           PY
 
       - name: Set up Java 17
