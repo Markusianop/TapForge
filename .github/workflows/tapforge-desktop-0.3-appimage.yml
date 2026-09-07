@@ -32,7 +32,7 @@ jobs:
         working-directory: /tmp/tfd03
         run: |
           python3 -m pip install --user pyinstaller
-          python3 -m PyInstaller --noconfirm --clean --windowed --onefile             --name tapforge-desktop tapforge_desktop/app.py
+          python3 -m PyInstaller --noconfirm --clean --windowed --onefile             --name tapforge-desktop tapforge_entry.py
       - name: Build AppDir
         run: |
           set -euo pipefail
