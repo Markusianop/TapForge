@@ -1,0 +1,67 @@
+name: TapForge 4.0 functional build
+
+on:
+  push:
+    branches:
+      - chatgpt/tapforge-4.0.0-functional
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout bootstrap branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+
+      - name: Install Gradle 8.9
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+
+      - name: Expand TapForge 4.0 source
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/tapforge4
+          base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge4.tar.xz
+          tar -xJf /tmp/tapforge4.tar.xz -C /tmp/tapforge4
+          test -f /tmp/tapforge4/app/build.gradle
+          grep -q "versionName '4.0.0'" /tmp/tapforge4/app/build.gradle
+
+      - name: Build debug and release
+        working-directory: /tmp/tapforge4
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug assembleRelease
+
+      - name: Verify APK outputs
+        working-directory: /tmp/tapforge4
+        run: |
+          set -euo pipefail
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          unzip -t app/build/outputs/apk/debug/app-debug.apk >/dev/null
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
+          find app/build/outputs/apk -type f -name '*.apk' -print -exec sha256sum {} \;
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: TapForge-4.0.0-functional-apks
+          path: |
+            /tmp/tapforge4/app/build/outputs/apk/debug/*.apk
+            /tmp/tapforge4/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 7
