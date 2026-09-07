@@ -1,0 +1,70 @@
+name: Build TapForge 3.2.1 Whisper Hotfix
+
+on:
+  push:
+    branches:
+      - whisper-keystore-3.2.1-build
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore TapForge 3.1 base
+        run: |
+          mkdir -p /tmp/tapforge-3.2.1
+          base64 -d .tapforge-build/glow-3.1.b64 > /tmp/tapforge-3.1.tar.xz
+          tar -xJf /tmp/tapforge-3.1.tar.xz -C /tmp/tapforge-3.2.1
+
+      - name: Apply Switchboard 3.2 patch
+        working-directory: /tmp/tapforge-3.2.1
+        run: |
+          base64 -d "$GITHUB_WORKSPACE/.tapforge-build/switchboard-3.2.patch.xz.b64" | xz -d > /tmp/switchboard-3.2.patch
+          patch -p1 --batch < /tmp/switchboard-3.2.patch
+
+      - name: Apply Whisper 3.2.1 hotfix
+        working-directory: /tmp/tapforge-3.2.1
+        run: patch -p1 --batch < "$GITHUB_WORKSPACE/.tapforge-build/whisper-3.2.1.patch"
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK components
+        run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "platform-tools"
+
+      - name: Install Gradle 8.9
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+
+      - name: Build TapForge 3.2.1
+        working-directory: /tmp/tapforge-3.2.1
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug assembleRelease
+
+      - name: Collect APKs
+        run: |
+          cp /tmp/tapforge-3.2.1/app/build/outputs/apk/debug/app-debug.apk /tmp/TapForge-3.2.1-WhisperFix-test.apk
+          cp /tmp/tapforge-3.2.1/app/build/outputs/apk/release/app-release-unsigned.apk /tmp/TapForge-3.2.1-WhisperFix-release-unsigned.apk
+          sha256sum /tmp/TapForge-3.2.1-WhisperFix-test.apk /tmp/TapForge-3.2.1-WhisperFix-release-unsigned.apk > /tmp/SHA256SUMS.txt
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: TapForge-3.2.1-WhisperFix-build
+          path: |
+            /tmp/TapForge-3.2.1-WhisperFix-test.apk
+            /tmp/TapForge-3.2.1-WhisperFix-release-unsigned.apk
+            /tmp/SHA256SUMS.txt
+          if-no-files-found: error
