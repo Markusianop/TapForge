@@ -1,4 +1,4 @@
-name: TapForge 4.2 functional build
+name: TapForge 4.2.1 rewrite build
 
 on:
   push:
@@ -34,14 +34,14 @@ jobs:
           curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /tmp
 
-      - name: Expand TapForge 4.2 source
+      - name: Expand TapForge 4.2.1 source
         run: |
           set -euo pipefail
           mkdir -p /tmp/tapforge42
           base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge42.tar.xz
           tar -xJf /tmp/tapforge42.tar.xz -C /tmp/tapforge42
           test -f /tmp/tapforge42/app/build.gradle
-          grep -q "versionName '4.2.0'" /tmp/tapforge42/app/build.gradle
+          grep -q "versionName '4.2.1'" /tmp/tapforge42/app/build.gradle
 
       - name: Build debug and release
         working-directory: /tmp/tapforge42
@@ -59,7 +59,7 @@ jobs:
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: TapForge-4.2.0-functional-apks
+          name: TapForge-4.2.1-rewrite-apks
           path: |
             /tmp/tapforge42/app/build/outputs/apk/debug/*.apk
             /tmp/tapforge42/app/build/outputs/apk/release/*.apk
