@@ -1,4 +1,4 @@
-name: Build TapForge 1.1 test APK
+name: Build TapForge 1.1 unsigned release
 
 on:
   push:
@@ -39,16 +39,25 @@ jobs:
           curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /tmp
 
-      - name: Build debug APK
+      - name: Build unsigned release APK
         working-directory: /tmp/tapforge-1.1
-        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleRelease
 
-      - name: Rename APK
-        run: cp /tmp/tapforge-1.1/app/build/outputs/apk/debug/app-debug.apk /tmp/TapForge-1.1-test.apk
+      - name: Collect unsigned APK and signing tools
+        run: |
+          cp /tmp/tapforge-1.1/app/build/outputs/apk/release/app-release-unsigned.apk /tmp/TapForge-1.1-unsigned.apk
+          tar -cJf /tmp/android-build-tools-34.tar.xz -C "$ANDROID_HOME/build-tools" 34.0.0
 
-      - name: Upload APK
+      - name: Upload unsigned APK
         uses: actions/upload-artifact@v4
         with:
-          name: TapForge-1.1-test
-          path: /tmp/TapForge-1.1-test.apk
+          name: TapForge-1.1-unsigned
+          path: /tmp/TapForge-1.1-unsigned.apk
+          if-no-files-found: error
+
+      - name: Upload Android signing tools
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build-tools-34
+          path: /tmp/android-build-tools-34.tar.xz
           if-no-files-found: error
