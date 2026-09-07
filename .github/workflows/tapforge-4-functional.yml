@@ -1,4 +1,4 @@
-name: TapForge 4.3 Xposed Bridge build
+name: TapForge 4.5 mobile mods build
 
 on:
   push:
@@ -37,22 +37,22 @@ jobs:
       - name: Expand TapForge 4.2.1 base + 4.3 Xposed patch
         run: |
           set -euo pipefail
-          mkdir -p /tmp/tapforge42
-          base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge42.tar.xz
-          tar -xJf /tmp/tapforge42.tar.xz -C /tmp/tapforge42
-          test -f /tmp/tapforge42/app/build.gradle
+          mkdir -p /tmp/tapforge45
+          base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge45.tar.xz
+          tar -xJf /tmp/tapforge45.tar.xz -C /tmp/tapforge45
+          test -f /tmp/tapforge45/app/build.gradle
           base64 -d .tapforge-build/TapForge-4.3.0-Xposed-patch.tar.xz.b64 > /tmp/tapforge43-patch.tar.xz
-          tar -xJf /tmp/tapforge43-patch.tar.xz -C /tmp/tapforge42
-          grep -q "versionName '4.3.0'" /tmp/tapforge42/app/build.gradle
-          test -f /tmp/tapforge42/app/src/main/assets/xposed_init
-          grep -q "com.tapforge.xposed.TapForgeXposedBridge" /tmp/tapforge42/app/src/main/assets/xposed_init
+          tar -xJf /tmp/tapforge43-patch.tar.xz -C /tmp/tapforge45
+          grep -q "versionName '4.3.0'" /tmp/tapforge45/app/build.gradle
+          test -f /tmp/tapforge45/app/src/main/assets/xposed_init
+          grep -q "com.tapforge.xposed.TapForgeXposedBridge" /tmp/tapforge45/app/src/main/assets/xposed_init
 
       - name: Build debug and release
-        working-directory: /tmp/tapforge42
+        working-directory: /tmp/tapforge45
         run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug assembleRelease
 
       - name: Verify APK outputs
-        working-directory: /tmp/tapforge42
+        working-directory: /tmp/tapforge45
         run: |
           set -euo pipefail
           test -s app/build/outputs/apk/debug/app-debug.apk
@@ -65,7 +65,7 @@ jobs:
         with:
           name: TapForge-4.3.0-Xposed-Bridge-apks
           path: |
-            /tmp/tapforge42/app/build/outputs/apk/debug/*.apk
-            /tmp/tapforge42/app/build/outputs/apk/release/*.apk
+            /tmp/tapforge45/app/build/outputs/apk/debug/*.apk
+            /tmp/tapforge45/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
           retention-days: 7
