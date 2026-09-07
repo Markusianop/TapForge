@@ -34,18 +34,16 @@ jobs:
           curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /tmp
 
-      - name: Expand TapForge 4.2.1 base + 4.3 Xposed patch
+      - name: Expand TapForge 4.5 source
         run: |
           set -euo pipefail
           mkdir -p /tmp/tapforge45
           base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge45.tar.xz
           tar -xJf /tmp/tapforge45.tar.xz -C /tmp/tapforge45
           test -f /tmp/tapforge45/app/build.gradle
-          base64 -d .tapforge-build/TapForge-4.3.0-Xposed-patch.tar.xz.b64 > /tmp/tapforge43-patch.tar.xz
-          tar -xJf /tmp/tapforge43-patch.tar.xz -C /tmp/tapforge45
-          grep -q "versionName '4.3.0'" /tmp/tapforge45/app/build.gradle
-          test -f /tmp/tapforge45/app/src/main/assets/xposed_init
-          grep -q "com.tapforge.xposed.TapForgeXposedBridge" /tmp/tapforge45/app/src/main/assets/xposed_init
+          grep -q "versionName '4.5.0'" /tmp/tapforge45/app/build.gradle
+          test -f /tmp/tapforge45/app/src/main/java/com/tapforge/JarModStore.java
+          test -f /tmp/tapforge45/app/src/main/java/com/tapforge/JarModManagerActivity.java
 
       - name: Build debug and release
         working-directory: /tmp/tapforge45
@@ -63,7 +61,7 @@ jobs:
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: TapForge-4.3.0-Xposed-Bridge-apks
+          name: TapForge-4.5.0-mobile-mods-apks
           path: |
             /tmp/tapforge45/app/build/outputs/apk/debug/*.apk
             /tmp/tapforge45/app/build/outputs/apk/release/*.apk
