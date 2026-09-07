@@ -56,15 +56,35 @@ jobs:
           Comment=Open NFC/smart-card workbench with addon interoperability
           Exec=tapforge-desktop
           Icon=tapforge-desktop
-          Categories=Utility;Development;
+          Categories=Utility;
           Terminal=false
           EOF
-          if [ -f /usr/share/icons/hicolor/scalable/apps/utilities-terminal.svg ]; then
-            cp /usr/share/icons/hicolor/scalable/apps/utilities-terminal.svg "$APPDIR/tapforge-desktop.svg"
-          else
-            cp /usr/share/icons/hicolor/scalable/apps/org.gnome.Terminal.svg "$APPDIR/tapforge-desktop.svg" || true
-          fi
+          cat > "$APPDIR/tapforge-desktop.xpm" <<'EOF'
+          /* XPM */
+          static char *tapforge_xpm[] = {
+          "16 16 3 1",
+          "  c None",
+          ". c #101014",
+          "+ c #8B5CF6",
+          "................",
+          ".++++++++++++++.",
+          ".+............+.",
+          ".+..++++++....+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+....++......+.",
+          ".+............+.",
+          ".++++++++++++++.",
+          "................",
+          "................"};
+          EOF
           test -x "$APPDIR/usr/bin/tapforge-desktop"
+          test -s "$APPDIR/tapforge-desktop.xpm"
       - name: Download appimagetool
         run: |
           curl -fL https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -o /tmp/appimagetool
