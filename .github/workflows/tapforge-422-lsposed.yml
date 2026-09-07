@@ -1,0 +1,72 @@
+name: TapForge 4.2.2 LSPosed build
+
+on:
+  push:
+    branches:
+      - chatgpt/tapforge-4.2.2-lsposed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+
+      - name: Install Gradle 8.9
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+
+      - name: Expand TapForge 4.2.2 source
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/tapforge422
+          base64 -d .tapforge-build/TapForge-4.2.2-LSPosed-source.tar.xz.b64 > /tmp/tapforge422.tar.xz
+          tar -xJf /tmp/tapforge422.tar.xz -C /tmp/tapforge422
+          test -f /tmp/tapforge422/app/build.gradle
+          grep -q "versionName '4.2.2'" /tmp/tapforge422/app/build.gradle
+          grep -q "versionCode 43" /tmp/tapforge422/app/build.gradle
+          test -f /tmp/tapforge422/app/src/main/assets/xposed_init
+          grep -q "com.tapforge.lsposed.TapForgeLsposedEntry" /tmp/tapforge422/app/src/main/assets/xposed_init
+          grep -q 'android:name="xposedmodule"' /tmp/tapforge422/app/src/main/AndroidManifest.xml
+          grep -q "compileOnly project(':xposed-stubs')" /tmp/tapforge422/app/build.gradle
+
+      - name: Build debug and release
+        working-directory: /tmp/tapforge422
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug assembleRelease
+
+      - name: Verify APK outputs
+        working-directory: /tmp/tapforge422
+        run: |
+          set -euo pipefail
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          unzip -t app/build/outputs/apk/debug/app-debug.apk >/dev/null
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
+          find app/build/outputs/apk -type f -name '*.apk' -print -exec sha256sum {} \;
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: TapForge-4.2.2-LSPosed-apks
+          path: |
+            /tmp/tapforge422/app/build/outputs/apk/debug/*.apk
+            /tmp/tapforge422/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 7
