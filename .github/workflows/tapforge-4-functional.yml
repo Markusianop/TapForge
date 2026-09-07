@@ -3,7 +3,7 @@ name: TapForge 4.1 functional build
 on:
   push:
     branches:
-      - chatgpt/tapforge-4.1.0-functional
+      - chatgpt/tapforge-4.0.0-functional
   workflow_dispatch:
 
 permissions:
@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/tapforge41
-          base64 -d .tapforge-build/TapForge-4.1.0-functional-source.tar.xz.b64 > /tmp/tapforge41.tar.xz
+          base64 -d .tapforge-build/TapForge-4.0.0-functional-source.tar.xz.b64 > /tmp/tapforge41.tar.xz
           tar -xJf /tmp/tapforge41.tar.xz -C /tmp/tapforge41
           test -f /tmp/tapforge41/app/build.gradle
           grep -q "versionName '4.1.0'" /tmp/tapforge41/app/build.gradle
