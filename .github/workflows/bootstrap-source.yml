@@ -28,8 +28,15 @@ jobs:
           mkdir -p /tmp/tapforge-source
           tar -xJf /tmp/tapforge-source.tar.xz -C /tmp/tapforge-source
 
+          cp .github/workflows/android.yml /tmp/android.yml
+          cp .github/workflows/bootstrap-source.yml /tmp/bootstrap-source.yml
+
           find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
           cp -a /tmp/tapforge-source/. .
+
+          mkdir -p .github/workflows
+          cp /tmp/android.yml .github/workflows/android.yml
+          cp /tmp/bootstrap-source.yml .github/workflows/bootstrap-source.yml
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
