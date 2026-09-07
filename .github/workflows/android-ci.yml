@@ -9,9 +9,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +30,7 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK components
+      - name: Install SDK components
         run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "platform-tools"
 
       - name: Install Gradle 8.9
@@ -35,3 +40,15 @@ jobs:
 
       - name: Build debug APK
         run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug
+
+      - name: Build release APK
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon assembleRelease
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tapforge-apks-${{ github.sha }}
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+          if-no-files-found: error

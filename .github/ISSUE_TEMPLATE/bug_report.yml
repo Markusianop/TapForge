@@ -3,6 +3,9 @@ description: Report a reproducible problem in TapForge
 title: "[Bug] "
 labels: [bug]
 body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve TapForge. Please redact private NFC payloads, credentials and keys.
   - type: input
     id: version
     attributes:
@@ -14,13 +17,13 @@ body:
     id: device
     attributes:
       label: Device and Android version
+      placeholder: "Device model, Android version"
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Steps to reproduce
-      description: Redact sensitive NFC payloads, credentials and private tag data.
     validations:
       required: true
   - type: textarea
@@ -33,5 +36,6 @@ body:
     id: actual
     attributes:
       label: Actual behavior / logs
+      description: Redact sensitive tag contents before posting.
     validations:
       required: true

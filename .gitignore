@@ -8,4 +8,6 @@ app/build/
 *.keystore
 keystore.properties
 signing.properties
+*.apk
+*.aab
 .DS_Store

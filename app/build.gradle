@@ -14,6 +14,27 @@ android {
         versionName '1.0'
     }
 
+    signingConfigs {
+        release {
+            def keystorePath = System.getenv('TAPFORGE_KEYSTORE')
+            if (keystorePath) {
+                storeFile file(keystorePath)
+                storePassword System.getenv('TAPFORGE_STORE_PASSWORD')
+                keyAlias System.getenv('TAPFORGE_KEY_ALIAS')
+                keyPassword System.getenv('TAPFORGE_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            if (System.getenv('TAPFORGE_KEYSTORE')) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled false
+        }
+    }
+
     buildFeatures {
         buildConfig true
     }

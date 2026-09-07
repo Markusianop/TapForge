@@ -1,11 +1,7 @@
-TapForge es una herramienta NFC libre y local para Android.
+TapForge es una herramienta NFC de código abierto y funcionamiento local para Android.
 
-Permite usar el teléfono como dispositivo NDEF Type 4 mediante HCE, recibir contenido NFC, leer y escribir etiquetas NDEF físicas, crear mensajes con varios registros, guardar perfiles reutilizables, escribir etiquetas por lotes con verificación, comparar tags, comprobar compatibilidad y probar APDU ISO-DEP introducidos por el usuario.
+Permite usar el teléfono como dispositivo NDEF Type 4 mediante HCE, recibir contenido NFC, leer y escribir etiquetas NDEF físicas, crear mensajes con varios registros en NDEF Studio, guardar perfiles reutilizables, escribir etiquetas por lotes con verificación, comparar etiquetas, comprobar compatibilidad y experimentar con ISO-DEP/APDU.
 
-Incluye URL, texto, correo, teléfono, SMS, ubicación, contactos/vCard, Wi-Fi/WPS, registros de aplicaciones Android, MIME, tipos externos de NFC Forum y NDEF raw.
+No requiere cuenta, no contiene anuncios ni analítica y no solicita permiso de Internet. El permiso opcional de contactos solo se solicita al importar un contacto.
 
-También incluye NDEF Studio, biblioteca de perfiles, historial local, huellas SHA-256 de NDEF y Undo Last Write para restaurar el NDEF anterior en la misma etiqueta.
-
-Privacidad: no solicita permiso de Internet, no contiene analíticas ni anuncios, no requiere cuenta y no usa backend en la nube. El permiso de contactos es opcional y solo se solicita al importar un contacto.
-
-TapForge copia y restaura contenido NDEF legible; no pretende clonar credenciales protegidas de pago, transporte o control de acceso.
+La función de clonado copia contenido NDEF legible; no clona tarjetas bancarias, transporte ni credenciales de acceso protegidas.

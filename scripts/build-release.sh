@@ -1,6 +1,8 @@
-#!/usr/bin/env sh
-set -eu
-: "${JAVA_HOME:=/usr/lib/jvm/java-17-openjdk}"
-export JAVA_HOME
-export PATH="$JAVA_HOME/bin:$PATH"
-exec gradle clean assembleRelease
+#!/usr/bin/env bash
+set -euo pipefail
+
+GRADLE_BIN="${GRADLE_BIN:-gradle}"
+"$GRADLE_BIN" --no-daemon clean assembleRelease
+
+printf '\nRelease output:\n'
+find app/build/outputs/apk/release -maxdepth 1 -type f -name '*.apk' -print

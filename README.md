@@ -1,41 +1,26 @@
 # TapForge
 
-TapForge is a free and open-source NFC toolkit for Android. It combines everyday NDEF tag workflows with phone-side HCE, diagnostics and lower-level ISO-DEP tools in one local-first app.
+TapForge is a free and open-source NFC toolkit for Android. It combines everyday NDEF workflows with phone-side HCE, physical-tag tools, diagnostics and ISO-DEP experimentation in one local-first app.
 
 **Public release:** 1.0  
 **Package:** `com.tapforge`  
 **License:** GPL-3.0-or-later
 
-## What TapForge can do
+## Features
 
-### Send and receive
-- Emulate NFC Forum Type 4 NDEF from the phone with Android HCE.
-- Share URL, text, email, phone, contacts/vCard, MIME and saved multi-record NDEF profiles.
-- Receive standard Android NDEF and fall back to direct ISO-DEP / Type 4 reads where available.
-- Custom HCE/APDU mode with user-defined AID and response data.
+- **Send / HCE:** emulate NFC Forum Type 4 NDEF from the phone.
+- **Receive:** read standard NDEF and compatible ISO-DEP / Type 4 sources.
+- **Physical tags:** inspect, write, clone NDEF, erase, initialize and request read-only mode when supported.
+- **NDEF Studio:** compose true multi-record NDEF messages.
+- **Profile Library:** save, import/export and reuse NDEF profiles; saved profiles can be activated for HCE.
+- **Batch Write:** duplicate-UID protection and optional read-back verification.
+- **Analyze:** Compare Tags, compatibility/preflight checks and SHA-256 NDEF fingerprints.
+- **APDU Lab:** send user-entered ISO-DEP commands and inspect raw responses.
+- **Recovery:** Undo Last Write can restore the previous readable NDEF to the same tag UID.
+- **History:** local NFC operation history.
+- URL, text, email, phone, SMS, location, contacts/vCard, Wi-Fi/WPS, Android app records, MIME, external types and raw NDEF.
 
-### Physical tags
-- Read tag UID, technologies, NDEF type, capacity, writable state, utilization and decoded records.
-- Write URL, text, email, phone, SMS, location, contact, Wi-Fi/WPS, Android app records, MIME, NFC Forum external types and raw NDEF.
-- Clone **NDEF content** between compatible tags.
-- Erase NDEF, initialize NDEF-formatable tags and request permanent read-only mode where Android/tag hardware supports it.
-- Decode common records, including Wi-Fi/WSC data.
-
-### Create and reuse
-- **NDEF Studio** for true multi-record NDEF messages.
-- **Profile Library** for local reusable profiles and JSON import/export.
-- Activate saved multi-record profiles as the phone's HCE payload.
-- **Batch Write** with duplicate UID protection and optional read-back verification.
-- Optional verification after normal writes.
-
-### Analyze and recover
-- Compare two tags, including SHA-256 fingerprints of their NDEF payloads.
-- Non-destructive compatibility/preflight check before writing.
-- APDU Lab for user-entered ISO-DEP command sequences and raw responses.
-- Undo the most recent NDEF overwrite by restoring the locally captured previous message to the same UID.
-- Local NFC operation history.
-
-TapForge does **not** claim to clone protected payment, transit, access-control or cryptographic credentials. Its clone/backup features operate on readable NDEF data.
+TapForge clones **readable NDEF content only**. It does not claim to clone protected payment, transit or access-control credentials.
 
 ## Privacy
 
@@ -44,20 +29,19 @@ TapForge is local-first:
 - no `INTERNET` permission;
 - no analytics;
 - no advertising SDK;
-- no account;
-- no cloud backend;
-- contact access is optional and requested only when importing a contact;
-- history, profiles and rollback data stay on the device unless the user explicitly exports a file.
+- no account or cloud backend;
+- optional `READ_CONTACTS` only when importing a contact;
+- history, profiles and rollback data remain on-device unless explicitly exported.
 
 See [PRIVACY.md](PRIVACY.md).
 
-## Build from source
+## Build
 
-Requirements:
+Recommended toolchain:
 
 - JDK 17
 - Android SDK Platform 35
-- Android Build Tools 34.0.0 or compatible tools selected by AGP
+- Android Build Tools 34.0.0
 - Gradle 8.9
 
 ```bash
@@ -67,22 +51,34 @@ export PATH="$JAVA_HOME/bin:$PATH"
 gradle clean assembleDebug
 ```
 
-For the unsigned release artifact used by reproducible/distribution builds:
+Release build:
 
 ```bash
-gradle clean assembleRelease
+./scripts/build-release.sh
 ```
 
-The project intentionally has no runtime third-party dependencies.
+If these environment variables are provided, the release variant is signed with that keystore:
+
+```text
+TAPFORGE_KEYSTORE
+TAPFORGE_STORE_PASSWORD
+TAPFORGE_KEY_ALIAS
+TAPFORGE_KEY_PASSWORD
+```
+
+Never commit the keystore or passwords.
 
 ## F-Droid
 
-The repository contains Fastlane/F-Droid-compatible store metadata and an example `fdroiddata` recipe under `fdroid/`.
+Upstream metadata lives at [`fdroid/com.tapforge.yml`](fdroid/com.tapforge.yml), and store metadata is under [`fastlane/metadata/android`](fastlane/metadata/android).
 
-Before submitting to the official F-Droid repository, publish this source tree in a public Git repository, tag the release as `v1.0`, and replace the placeholder repository URLs in `fdroid/com.tapforge.yml.example` with the real repository URL.
+Source: https://github.com/Markusianop/TapForge
 
-F-Droid should build and sign its own APK from source. Do not submit a privately signed APK as a substitute for the reproducible source build.
+## Documentation
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Security-related reports are covered by [SECURITY.md](SECURITY.md).
+- [Architecture](docs/ARCHITECTURE.md)
+- [NFC compatibility](docs/NFC_COMPATIBILITY.md)
+- [Privacy](PRIVACY.md)
+- [Security](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
