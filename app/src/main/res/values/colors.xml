@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="icon_bg">#000000</color>
+    <color name="accent">#8E7CFF</color>
+    <color name="accent_pressed">#7464DF</color>
+    <color name="ready">#62E6B5</color>
+    <color name="danger">#FF657A</color>
+    <color name="warning">#F4B85A</color>
+    <color name="neutral">#8D8A96</color>
+</resources>

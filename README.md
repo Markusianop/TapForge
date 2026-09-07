@@ -77,11 +77,9 @@ The project intentionally has no runtime third-party dependencies.
 
 ## F-Droid
 
-The repository contains Fastlane/F-Droid-compatible store metadata and a ready-to-adapt `fdroiddata` recipe under `fdroid/`.
+The repository contains Fastlane/F-Droid-compatible store metadata and an example `fdroiddata` recipe under `fdroid/`.
 
-Source repository: https://github.com/Markusianop/TapForge
-
-For the first public release, tag the release commit as `v1.0`, verify the recipe against the current F-Droid metadata schema, and submit `fdroid/com.tapforge.yml` to the official `fdroiddata` repository.
+Before submitting to the official F-Droid repository, publish this source tree in a public Git repository, tag the release as `v1.0`, and replace the placeholder repository URLs in `fdroid/com.tapforge.yml.example` with the real repository URL.
 
 F-Droid should build and sign its own APK from source. Do not submit a privately signed APK as a substitute for the reproducible source build.
 

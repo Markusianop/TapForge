@@ -1,0 +1,1 @@
+Primera versión pública de TapForge: HCE, herramientas para etiquetas físicas, NDEF Studio, biblioteca de perfiles, escritura por lotes con verificación, comparación, compatibilidad, APDU Lab, restauración e historial local.

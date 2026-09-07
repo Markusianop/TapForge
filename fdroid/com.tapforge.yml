@@ -1,0 +1,33 @@
+Categories:
+  - Connectivity
+License: GPL-3.0-or-later
+AuthorName: Markus
+SourceCode: https://github.com/Markusianop/TapForge
+IssueTracker: https://github.com/Markusianop/TapForge/issues
+Changelog: https://github.com/Markusianop/TapForge/blob/main/CHANGELOG.md
+
+AutoName: TapForge
+Summary: Open-source NFC toolkit for NDEF, HCE, tags and ISO-DEP
+Description: |-
+  TapForge is a local-first NFC toolkit for Android. It supports phone-side
+  NDEF Type 4 HCE, direct receive mode, physical NDEF tag reading/writing,
+  NDEF Studio, reusable profiles, batch writing with read-back verification,
+  comparison, compatibility checks, ISO-DEP APDU inspection, rollback and
+  local history.
+
+  It has no Internet permission, analytics, ads, account or cloud backend.
+
+RepoType: git
+Repo: https://github.com/Markusianop/TapForge.git
+
+Builds:
+  - versionName: '1.0'
+    versionCode: 15
+    commit: v1.0
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: '1.0'
+CurrentVersionCode: 15

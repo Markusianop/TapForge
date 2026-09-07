@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/libraryRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:background="?android:attr/colorBackground">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:clipToPadding="false" android:overScrollMode="never">
+        <LinearLayout android:id="@+id/libraryContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingLeft="20dp" android:paddingRight="20dp" android:paddingBottom="40dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                <ImageButton android:id="@+id/libraryBack" android:layout_width="48dp" android:layout_height="48dp" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/back" android:padding="12dp" android:src="@drawable/ic_back" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1" android:text="@string/profile_library" android:textColor="?android:attr/textColorPrimary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/profile_library_subtitle" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+            <Button android:id="@+id/librarySaveActive" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:background="@drawable/bg_primary_button" android:minHeight="52dp" android:text="@string/save_active_profile" android:textAllCaps="false" android:textColor="@android:color/white" android:textStyle="bold" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+                <Button android:id="@+id/libraryImport" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:layout_weight="1" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/import_library" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+                <Button android:id="@+id/libraryExport" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_weight="1" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/export_library" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+            </LinearLayout>
+            <TextView android:id="@+id/libraryEmpty" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:gravity="center" android:text="@string/library_empty" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+            <LinearLayout android:id="@+id/libraryList" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

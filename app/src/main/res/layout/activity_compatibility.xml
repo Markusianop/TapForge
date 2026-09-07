@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/compatRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:background="?android:attr/colorBackground" android:clipChildren="false">
+    <LinearLayout android:id="@+id/compatContent" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:paddingLeft="20dp" android:paddingRight="20dp" android:paddingBottom="28dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageButton android:id="@+id/compatBack" android:layout_width="48dp" android:layout_height="48dp" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/back" android:padding="12dp" android:src="@drawable/ic_back" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1" android:text="@string/compatibility_check" android:textColor="?android:attr/textColorPrimary" android:textSize="24sp" android:textStyle="bold" />
+        </LinearLayout>
+        <FrameLayout android:id="@+id/compatStage" android:layout_width="280dp" android:layout_height="280dp" android:layout_gravity="center_horizontal" android:layout_marginTop="24dp" android:clipChildren="false" android:clipToPadding="false">
+            <View android:id="@+id/compatHaloOuter" android:layout_width="210dp" android:layout_height="210dp" android:layout_gravity="center" android:background="@drawable/bg_scan_halo" />
+            <View android:id="@+id/compatHalo" android:layout_width="170dp" android:layout_height="170dp" android:layout_gravity="center" android:background="@drawable/bg_scan_halo" />
+            <ImageView android:id="@+id/compatGlyph" android:layout_width="112dp" android:layout_height="112dp" android:layout_gravity="center" android:src="@drawable/ic_tf_brandmark" />
+        </FrameLayout>
+        <TextView android:id="@+id/compatTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:text="@string/check_tag_ready" android:textColor="?android:attr/textColorPrimary" android:textSize="23sp" android:textStyle="bold" />
+        <TextView android:id="@+id/compatSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:gravity="center" android:text="@string/check_tag_subtitle" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+        <LinearLayout android:id="@+id/compatResultCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp" android:visibility="gone">
+            <TextView android:id="@+id/compatResult" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="?android:attr/textColorSecondary" android:textIsSelectable="true" android:textSize="13sp" />
+            <Button android:id="@+id/compatAgain" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/scan_another" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

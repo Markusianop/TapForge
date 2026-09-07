@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/studioRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:background="?android:attr/colorBackground">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:clipToPadding="false" android:overScrollMode="never">
+        <LinearLayout android:id="@+id/studioContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingLeft="20dp" android:paddingRight="20dp" android:paddingBottom="40dp">
+            <LinearLayout android:id="@+id/studioHeader" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                <ImageButton android:id="@+id/studioBack" android:layout_width="48dp" android:layout_height="48dp" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/back" android:padding="12dp" android:src="@drawable/ic_back" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1" android:text="@string/ndef_studio" android:textColor="?android:attr/textColorPrimary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/ndef_studio_subtitle" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add_record" android:textColor="?android:attr/textColorPrimary" android:textSize="18sp" android:textStyle="bold" />
+                <LinearLayout android:id="@+id/studioTypeRow" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_input" android:gravity="center_vertical" android:minHeight="56dp" android:orientation="horizontal" android:paddingLeft="14dp" android:paddingRight="14dp">
+                    <TextView android:id="@+id/studioTypeText" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="?android:attr/textColorPrimary" android:textSize="16sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⌄" android:textColor="?android:attr/textColorSecondary" android:textSize="22sp" />
+                </LinearLayout>
+                <EditText android:id="@+id/studioValue" style="@style/TagWriteInput" android:hint="@string/hint_text" />
+                <EditText android:id="@+id/studioExtra" style="@style/TagWriteInput" android:visibility="gone" />
+                <Button android:id="@+id/studioAdd" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/add_record" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+                    <Button android:id="@+id/studioAddActive" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginRight="5dp" android:layout_weight="1" android:background="@drawable/bg_secondary_button" android:minHeight="48dp" android:text="@string/add_active_profile" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+                    <Button android:id="@+id/studioAddLastScan" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_weight="1" android:background="@drawable/bg_secondary_button" android:minHeight="48dp" android:text="@string/add_last_scan" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/studioRecordsCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp">
+                <TextView android:id="@+id/studioRecordsTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/records_empty" android:textColor="?android:attr/textColorPrimary" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:id="@+id/studioRecords" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:textColor="?android:attr/textColorSecondary" android:textIsSelectable="true" android:textSize="13sp" />
+                <Button android:id="@+id/studioClear" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_secondary_button" android:minHeight="48dp" android:text="@string/clear_records" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" />
+            </LinearLayout>
+            <EditText android:id="@+id/studioProfileName" style="@style/TagWriteInput" android:hint="@string/profile_name" />
+            <Button android:id="@+id/studioSave" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/save_to_library" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" android:textStyle="bold" />
+            <Button android:id="@+id/studioWrite" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:background="@drawable/bg_primary_button" android:minHeight="54dp" android:text="@string/write_once" android:textAllCaps="false" android:textColor="@android:color/white" android:textStyle="bold" />
+            <Button android:id="@+id/studioBatch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:background="@drawable/bg_secondary_button" android:minHeight="50dp" android:text="@string/batch_write" android:textAllCaps="false" android:textColor="?android:attr/textColorPrimary" android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,1 @@
+First public release of TapForge: HCE send/receive, physical tag tools, NDEF Studio, Profile Library, Batch Write with verification, comparison, compatibility checks, APDU Lab, rollback and local history.

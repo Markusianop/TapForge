@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tagWriteRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <ScrollView
+        android:id="@+id/writeScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+        <LinearLayout
+            android:id="@+id/writeContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="36dp">
+            <LinearLayout
+                android:id="@+id/writeHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/writeBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/back"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_back" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/write_tag"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/content"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/writeTypeRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center_vertical"
+                    android:minHeight="56dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+                    <TextView
+                        android:id="@+id/writeTypeText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⌄"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="22sp" />
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/writeValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_input"
+                    android:minHeight="58dp"
+                    android:padding="14dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textColorHint="?android:attr/textColorHint" />
+                <EditText
+                    android:id="@+id/writeExtra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_input"
+                    android:minHeight="54dp"
+                    android:padding="14dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textColorHint="?android:attr/textColorHint"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/writeContactFields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <EditText android:id="@+id/writeContactName" style="@style/TagWriteInput" android:hint="@string/contact_name" />
+                    <EditText android:id="@+id/writeContactPhone" style="@style/TagWriteInput" android:hint="@string/contact_phone" android:inputType="phone" />
+                    <EditText android:id="@+id/writeContactEmail" style="@style/TagWriteInput" android:hint="@string/contact_email" android:inputType="textEmailAddress" />
+                    <EditText android:id="@+id/writeContactOrg" style="@style/TagWriteInput" android:hint="@string/contact_company" />
+                    <EditText android:id="@+id/writeContactTitle" style="@style/TagWriteInput" android:hint="@string/contact_title" />
+                    <EditText android:id="@+id/writeContactAddress" style="@style/TagWriteInput" android:hint="@string/contact_address" />
+                    <EditText android:id="@+id/writeContactWeb" style="@style/TagWriteInput" android:hint="@string/contact_website" android:inputType="textUri" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/useActiveProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_secondary_button"
+                android:minHeight="50dp"
+                android:text="@string/use_active_profile"
+                android:textAllCaps="false"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/saveWriterProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_secondary_button"
+                android:minHeight="50dp"
+                android:text="@string/save_to_library"
+                android:textAllCaps="false"
+                android:textColor="?android:attr/textColorPrimary" />
+
+            <CheckBox
+                android:id="@+id/writeVerify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:buttonTint="?android:attr/colorAccent"
+                android:checked="true"
+                android:text="@string/verify_after_write"
+                android:textColor="?android:attr/textColorPrimary" />
+
+            <Button
+                android:id="@+id/startWriteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_primary_button"
+                android:minHeight="54dp"
+                android:text="@string/ready_to_write"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/writeSizeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/writeOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:visibility="gone">
+        <ImageButton
+            android:id="@+id/cancelWrite"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|left"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:padding="12dp"
+            android:src="@drawable/ic_back" />
+        <FrameLayout
+            android:id="@+id/writeScanStage"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_gravity="center"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+            <View android:id="@+id/writeHaloOuter" android:layout_width="214dp" android:layout_height="214dp" android:layout_gravity="center" android:background="@drawable/bg_scan_halo" />
+            <View android:id="@+id/writeHalo" android:layout_width="172dp" android:layout_height="172dp" android:layout_gravity="center" android:background="@drawable/bg_scan_halo" />
+            <ImageView android:id="@+id/writeGlyph" android:layout_width="112dp" android:layout_height="112dp" android:layout_gravity="center" android:src="@drawable/ic_tf_brandmark" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingBottom="76dp">
+            <TextView
+                android:id="@+id/writeOverlayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/approach_tag"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/writeOverlaySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/approach_tag_subtitle"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

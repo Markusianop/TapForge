@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/apduRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:background="?android:attr/colorBackground">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" android:clipToPadding="false" android:overScrollMode="never">
+        <LinearLayout android:id="@+id/apduContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingLeft="20dp" android:paddingRight="20dp" android:paddingBottom="40dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                <ImageButton android:id="@+id/apduBack" android:layout_width="48dp" android:layout_height="48dp" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/back" android:padding="12dp" android:src="@drawable/ic_back" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1" android:text="@string/apdu_lab" android:textColor="?android:attr/textColorPrimary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="@string/apdu_lab_subtitle" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/apdu_sequence" android:textColor="?android:attr/textColorPrimary" android:textSize="18sp" android:textStyle="bold" />
+                <EditText android:id="@+id/apduInput" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_input" android:fontFamily="monospace" android:gravity="top|left" android:hint="00A4040007D2760000850101\n00B000000F" android:inputType="textMultiLine|textNoSuggestions" android:minHeight="130dp" android:padding="14dp" android:textColor="?android:attr/textColorPrimary" android:textColorHint="?android:attr/textColorHint" android:textSize="13sp" />
+                <Button android:id="@+id/apduArm" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_primary_button" android:minHeight="54dp" android:text="@string/run_on_tag" android:textAllCaps="false" android:textColor="@android:color/white" android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/apduResultCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp" android:visibility="gone">
+                <TextView android:id="@+id/apduStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="?android:attr/textColorPrimary" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:id="@+id/apduResult" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:fontFamily="monospace" android:textColor="?android:attr/textColorSecondary" android:textIsSelectable="true" android:textSize="12sp" />
+            </LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="@string/apdu_lab_note" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

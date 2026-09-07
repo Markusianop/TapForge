@@ -1,0 +1,1 @@
+Herramienta NFC libre para NDEF, HCE, etiquetas e ISO-DEP

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/toolsRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:background="?android:attr/colorBackground">
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:clipToPadding="false" android:fillViewport="true" android:overScrollMode="never">
+        <LinearLayout android:id="@+id/toolsContent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingLeft="20dp" android:paddingRight="20dp" android:paddingBottom="40dp">
+            <LinearLayout android:id="@+id/toolsHeader" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal">
+                <ImageButton android:id="@+id/toolsBack" android:layout_width="48dp" android:layout_height="48dp" android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/back" android:padding="12dp" android:src="@drawable/ic_back" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_weight="1" android:text="@string/nfc_tools" android:textColor="?android:attr/textColorPrimary" android:textSize="24sp" android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/toolsHero" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="20dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tools_everything_nfc" android:textColor="?android:attr/textColorPrimary" android:textSize="22sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:text="@string/tools_everything_nfc_subtitle" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="@string/tools_essentials" android:textColor="?android:attr/textColorSecondary" android:textSize="13sp" android:textStyle="bold" />
+            <LinearLayout android:id="@+id/readTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/read_tag" /><TextView style="@style/ToolSubtitle" android:text="@string/read_tag_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/writeTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/write_tag" /><TextView style="@style/ToolSubtitle" android:text="@string/write_tag_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/cloneTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/clone_ndef" /><TextView style="@style/ToolSubtitle" android:text="@string/clone_ndef_subtitle" /></LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="@string/tools_create" android:textColor="?android:attr/textColorSecondary" android:textSize="13sp" android:textStyle="bold" />
+            <LinearLayout android:id="@+id/studioCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/ndef_studio" /><TextView style="@style/ToolSubtitle" android:text="@string/ndef_studio_card_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/batchCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/batch_write" /><TextView style="@style/ToolSubtitle" android:text="@string/batch_write_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/libraryCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/profile_library" /><TextView style="@style/ToolSubtitle" android:text="@string/profile_library_card_subtitle" /></LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="@string/tools_analyze" android:textColor="?android:attr/textColorSecondary" android:textSize="13sp" android:textStyle="bold" />
+            <LinearLayout android:id="@+id/compareCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/compare_tags" /><TextView style="@style/ToolSubtitle" android:text="@string/compare_tags_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/compatCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/compatibility_check" /><TextView style="@style/ToolSubtitle" android:text="@string/compatibility_check_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/apduCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/apdu_lab" /><TextView style="@style/ToolSubtitle" android:text="@string/apdu_lab_card_subtitle" /></LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="@string/tools_manage" android:textColor="?android:attr/textColorSecondary" android:textSize="13sp" android:textStyle="bold" />
+            <LinearLayout android:id="@+id/undoWriteCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/undo_last_write" /><TextView style="@style/ToolSubtitle" android:text="@string/undo_last_write_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/eraseTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/erase_tag" /><TextView style="@style/ToolSubtitle" android:text="@string/erase_tag_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/formatTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/format_tag" /><TextView style="@style/ToolSubtitle" android:text="@string/format_tag_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/lockTagCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/lock_tag" /><TextView style="@style/ToolSubtitle" android:text="@string/lock_tag_subtitle" /></LinearLayout>
+            <LinearLayout android:id="@+id/historyCard" style="@style/ToolCard"><TextView style="@style/ToolTitle" android:text="@string/nfc_history" /><TextView style="@style/ToolSubtitle" android:text="@string/nfc_history_subtitle" /></LinearLayout>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:gravity="center" android:text="@string/tag_tools_scope" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/onboardingRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:id="@+id/onboardingContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="640dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp">
+
+            <ImageView
+                android:id="@+id/onboardingBrand"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginTop="22dp"
+                android:src="@drawable/ic_tf_brandmark"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/onboardingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center"
+                android:text="@string/onboarding_title"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/onboardingSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:maxWidth="560dp"
+                android:text="@string/onboarding_subtitle"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/featureSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/onboarding_send_title" android:textColor="?android:attr/textColorPrimary" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/onboarding_send_body" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/featureReceive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/onboarding_receive_title" android:textColor="?android:attr/textColorPrimary" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/onboarding_receive_body" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/featurePrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/onboarding_private_title" android:textColor="?android:attr/textColorPrimary" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/onboarding_private_body" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp"/>
+            </LinearLayout>
+
+            <Space android:layout_width="1dp" android:layout_height="24dp" android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/onboardingStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:minHeight="54dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/bg_primary_button"
+                android:text="@string/get_started"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settingsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:id="@+id/settingsContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="8dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="34dp">
+
+            <LinearLayout
+                android:id="@+id/settingsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/back"
+                    android:padding="11dp"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/settings"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/modeCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_mode"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/modeRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <RadioButton
+                        android:id="@+id/modeNdefRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/mode_ndef"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton
+                        android:id="@+id/modeCustomRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/mode_hce"
+                        android:textColor="?android:attr/textColorPrimary" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/appearanceCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_appearance"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/themeRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <RadioButton
+                        android:id="@+id/themeSystemRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/theme_system"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton
+                        android:id="@+id/themeLightRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/theme_light"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton
+                        android:id="@+id/themeDarkRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/theme_dark"
+                        android:textColor="?android:attr/textColorPrimary" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/languageCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_language"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/languageRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <RadioButton
+                        android:id="@+id/languageSystemRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/language_system"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton
+                        android:id="@+id/languageSpanishRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/language_spanish"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton
+                        android:id="@+id/languageEnglishRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:text="@string/language_english"
+                        android:textColor="?android:attr/textColorPrimary" />
+
+                    <RadioButton android:id="@+id/languagePortugueseRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_portuguese" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageFrenchRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_french" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageGermanRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_german" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageItalianRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_italian" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageJapaneseRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_japanese" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageChineseRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_chinese" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageKoreanRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_korean" android:textColor="?android:attr/textColorPrimary" />
+                    <RadioButton android:id="@+id/languageRussianRadio" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="50dp" android:text="@string/language_russian" android:textColor="?android:attr/textColorPrimary" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/screenCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_screen"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/keepScreenSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="50dp"
+                    android:text="@string/keep_screen_on"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/interactionCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_interaction"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/hapticsSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="50dp"
+                    android:text="@string/haptics"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+                <Switch
+                    android:id="@+id/reduceMotionSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:text="@string/reduce_motion"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+                <Button
+                    android:id="@+id/showOnboardingButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:minHeight="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_secondary_button"
+                    android:text="@string/show_onboarding"
+                    android:textAllCaps="false"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deviceSettingsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_device"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/settingsDeviceText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/settingsVersionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="TapForge"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
