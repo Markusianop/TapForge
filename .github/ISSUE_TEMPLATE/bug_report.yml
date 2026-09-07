@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible problem in TapForge
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve TapForge. Please avoid posting secrets, payment credentials, access keys, or private tag data.
+  - type: input
+    id: version
+    attributes:
+      label: TapForge version
+      placeholder: 1.0
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: Device model, Android version
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Tell us exactly what you did.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / logs
+      description: Redact sensitive NFC payloads before posting.
+    validations:
+      required: true
