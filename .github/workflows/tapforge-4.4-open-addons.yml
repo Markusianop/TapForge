@@ -1,0 +1,53 @@
+name: TapForge 4.4 Open Addons
+
+on:
+  push:
+    branches:
+      - chatgpt/tapforge-open-interop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools"
+      - name: Install Gradle 8.9
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+      - name: Expand source
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/tf44
+          base64 -d .tapforge-build/TapForge-4.4.0-source.tar.xz.b64 > /tmp/tf44.tar.xz
+          tar -xJf /tmp/tf44.tar.xz -C /tmp/tf44
+          grep -q "versionName '4.4.0'" /tmp/tf44/app/build.gradle
+      - name: Build
+        working-directory: /tmp/tf44
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug assembleRelease
+      - name: Verify
+        working-directory: /tmp/tf44
+        run: |
+          set -euo pipefail
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          unzip -t app/build/outputs/apk/debug/app-debug.apk >/dev/null
+          sha256sum app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release-unsigned.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TapForge-4.4.0-open-addons-apks
+          path: |
+            /tmp/tf44/app/build/outputs/apk/debug/*.apk
+            /tmp/tf44/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 7
