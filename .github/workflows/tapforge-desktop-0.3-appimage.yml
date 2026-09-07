@@ -31,6 +31,10 @@ jobs:
       - name: Build standalone executable
         working-directory: /tmp/tfd03
         run: |
+          cat > tapforge_entry.py <<'PY'
+          from tapforge_desktop.app import main
+          main()
+          PY
           python3 -m pip install --user pyinstaller
           python3 -m PyInstaller --noconfirm --clean --windowed --onefile             --name tapforge-desktop tapforge_entry.py
       - name: Build AppDir
