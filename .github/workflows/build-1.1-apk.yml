@@ -1,0 +1,54 @@
+name: Build TapForge 1.1 test APK
+
+on:
+  push:
+    branches:
+      - build-1.1-apk
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore TapForge 1.1 source
+        run: |
+          mkdir -p /tmp/tapforge-1.1
+          base64 -d .tapforge-build/source-1.1.tar.xz.b64 > /tmp/tapforge-1.1.tar.xz
+          tar -xJf /tmp/tapforge-1.1.tar.xz -C /tmp/tapforge-1.1
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: sdkmanager "platforms;android-35" "build-tools;34.0.0" "platform-tools"
+
+      - name: Install Gradle 8.9
+        run: |
+          curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+
+      - name: Build debug APK
+        working-directory: /tmp/tapforge-1.1
+        run: /tmp/gradle-8.9/bin/gradle --no-daemon clean assembleDebug
+
+      - name: Rename APK
+        run: cp /tmp/tapforge-1.1/app/build/outputs/apk/debug/app-debug.apk /tmp/TapForge-1.1-test.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TapForge-1.1-test
+          path: /tmp/TapForge-1.1-test.apk
+          if-no-files-found: error
